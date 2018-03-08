@@ -33,10 +33,11 @@ public class OVController {
 	 * @HystrixProperty(name="circuitBreaker.sleepWindowInMilliseconds",
 	 * value="1000") After 1 second , close the circuit breaker
 	 * 
-	 */
-	@HystrixCommand(fallbackMethod = "autoValidate", commandProperties = {
+	 * @HystrixCommand(fallbackMethod = "autoValidate", commandProperties = {
 			@HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "20"),
 			@HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "1000") })
+	 */
+	@HystrixCommand(fallbackMethod = "autoValidate")
 	public String validateOrder() {
 		String response = "";
 		try {
@@ -47,7 +48,7 @@ public class OVController {
 			httpResponse = HttpClientBuilder.create().build().execute(request);
 			watch.stop();
 			response = EntityUtils.toString(httpResponse.getEntity());
-			System.out.println(">>>>>>>Response:" + response + "  Response time(hh:mm:SS:mS): " + watch.toString());
+			System.out.println(">>>>>>>Response:(Time)" + response + "("+System.currentTimeMillis()+")"+  "Response time(hh:mm:SS:mS): " + watch.toString());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -59,7 +60,7 @@ public class OVController {
 	}
 
 	public String autoValidate() {
-		System.out.println("Auto validated");
+		System.out.println("Auto validated at : "+System.currentTimeMillis());
 		return "Order Validated Automatically with defaults";
 	}
 }
