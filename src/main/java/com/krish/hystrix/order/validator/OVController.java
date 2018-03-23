@@ -39,13 +39,16 @@ public class OVController {
 	 */
 	@HystrixCommand(fallbackMethod = "autoValidate")
 	public String validateOrder() {
+		System.out.println("in validate order : "+System.currentTimeMillis());    
 		String response = "";
 		try {
 			StopWatch watch = new StopWatch();
 			HttpUriRequest request = new HttpGet("http://localhost:" + "" + "9092" + "/eo/address");
 			HttpResponse httpResponse;
 			watch.start();
+			System.out.println("in validate order : "+System.currentTimeMillis()); 
 			httpResponse = HttpClientBuilder.create().build().execute(request);
+			System.out.println("in validate order : "+System.currentTimeMillis()); 
 			watch.stop();
 			response = EntityUtils.toString(httpResponse.getEntity());
 			System.out.println(">>>>>>>Response:(Time)" + response + "("+System.currentTimeMillis()+")"+  "Response time(hh:mm:SS:mS): " + watch.toString());
