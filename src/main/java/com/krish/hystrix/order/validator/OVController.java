@@ -42,6 +42,7 @@ public class OVController {
 		System.out.println("in validate order : "+System.currentTimeMillis());    
 		String response = "";
 		try {
+			System.out.println("in Order Validator and calling AddressValidator REST API : "+System.currentTimeMillis()); 
 			StopWatch watch = new StopWatch();
 			HttpUriRequest request = new HttpGet("http://localhost:" + "" + "9092" + "/eo/address");
 			HttpResponse httpResponse;
